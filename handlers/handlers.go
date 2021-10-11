@@ -4,7 +4,6 @@ import (
 	"myapp/data"
 	"net/http"
 
-	"github.com/CloudyKit/jet/v6"
 	"github.com/tsawler/celeritas"
 )
 
