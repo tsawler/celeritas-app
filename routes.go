@@ -15,6 +15,9 @@ func (a *application) routes() *chi.Mux {
 	// static routes
 	fileServer := http.FileServer(http.Dir("./public"))
 	a.App.Routes.Handle("/public/*", http.StripPrefix("/public", fileServer))
+	
+	// routes from celeritas
+	a.App.Routes.Mount("/celeritas", celeritas.Routes())
 
 	return a.App.Routes
 }
