@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/tsawler/celeritas"
 	"net/http"
 
 	"github.com/go-chi/chi/v5"
