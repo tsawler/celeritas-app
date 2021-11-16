@@ -2,7 +2,6 @@ BINARY_NAME=celeritasApp.exe
 
 ## build: builds all binaries
 build:
-    @go mod vendor
     @go build -o tmp/${BINARY_NAME} .
 	@echo Celeritas built!
 
