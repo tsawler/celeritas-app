@@ -1,0 +1,9 @@
+---
+development:
+  dialect:
+  database:
+  user:
+  password:
+  host:
+  port:
+  pool: 5

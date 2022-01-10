@@ -33,9 +33,7 @@ func New(databasePool *sql.DB) Models {
 		// do nothing
 	}
 
-	return Models{
-
-	}
+	return Models{}
 }
 
 // getInsertID returns the integer value of a newly inserted id (using upper)

@@ -24,17 +24,45 @@ services:
     volumes:
       - ./db-data/redis/:/data
 
-  #  start MariaDB, and ensure that data is stored to a mounted volume
-  mariadb:
-    image: 'mariadb:10.6'
+  #  start sftp webdav, and admin interface; ensure that data is stored to a mounted volume
+  sftp:
+    image: 'drakkan/sftpgo:latest'
     ports:
-      - "3306:3306"
+      - "8080:8080"
+      - "2022:2022"
+      - "10080:10080"
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: password
-      MYSQL_DATABASE: celeritas
-      MYSQL_USER: mariadb
-      MYSQL_PASSWORD: password
-
+      SFTPGO_WEBDAVD__BINDINGS__0__PORT: 10080
     volumes:
-      - ./db-data/mariadb/:/var/lib/mysql
+      - ./db-data/sftp/:/mnt/data/
+      - ./db-data/home/:/var/lib/sftpgo
+
+  #  start minio, and ensure that data is stored to a mounted volume
+  minio:
+    image: 'quay.io/minio/minio'
+    command: server /mnt/data --console-address ":9001"
+    ports:
+      - "8000:9000"
+      - "9001:9001"
+    restart: always
+    environment:
+      MINIO_ROOT_USER: root
+      MINIO_ROOT_PASSWORD: password
+    volumes:
+      - ./db-data/minio/:/mnt/data/
+
+  #  start MariaDB, and ensure that data is stored to a mounted volume
+  # mariadb:
+  #   image: 'mariadb:10.6'
+  #   ports:
+  #     - "3306:3306"
+  #   restart: always
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: password
+  #     MYSQL_DATABASE: celeritas
+  #     MYSQL_USER: mariadb
+  #     MYSQL_PASSWORD: password
+
+  #   volumes:
+  #     - ./db-data/mariadb/:/var/lib/mysql
